@@ -1,0 +1,20 @@
+{
+    "name": "youcast/php_lib-chatgpt",
+    "description": "TikTokAPI for PHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "YouCast",
+            "homepage": "https://youcast.jp"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "YouCast\\ChatGPT\\": "src"
+        }
+    },
+    "require": {
+        "php": ">=8.0"
+    }
+}
