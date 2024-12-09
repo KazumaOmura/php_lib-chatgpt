@@ -3,6 +3,7 @@
 namespace YouCast\ChatGPT\Api;
 
 use YouCast\ChatGPT\Enum\Model;
+use YouCast\ChatGPT\Entity\Response;
 
 class ChatGPTClient
 {
@@ -20,7 +21,7 @@ class ChatGPTClient
      * @param string $model
      * @param float $temperature
      */
-    public function __construct(string $api_key, string $model = Model::GPT3, float $temperature = 0.7)
+    public function __construct(string $api_key, string $model = Model::GPT4, float $temperature = 0.7)
     {
         $this->api_key = $api_key;
         $this->temperature = $temperature;
@@ -46,7 +47,7 @@ class ChatGPTClient
     /**
      * リクエストするクエリを設定する
      * 
-     * @param string $queries
+     * @param array $queries
      * @return \YouCast\ChatGPT\Api\ChatGPTClient
      */
     public function setQueries(array $queries): self
@@ -58,10 +59,10 @@ class ChatGPTClient
     /**
     * リクエストを送信し、レスポンスを取得する
     * 
-    * @return string
+    * @return \YouCast\ChatGPT\Entity\Response
     * @throws \Exception
     */
-    public function exec(): string
+    public function exec(): Response
     {
         $messages = [
             [
@@ -97,13 +98,7 @@ class ChatGPTClient
         if ($error) {
             throw new \Exception($error);
         } else {
-            // レスポンスをデコード
-            $response = json_decode($response, true);
-            if (isset($response['choices'][0]['message']['content'])) {
-                return $response['choices'][0]['message']['content'];
-            } else {
-                throw new \Exception('Failed to get response');
-            }
+            return new Response(json_decode($response, true));
         }
     }
 }
