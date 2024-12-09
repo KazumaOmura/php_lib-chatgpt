@@ -11,7 +11,7 @@ class ChatGPTClient
     private string $model;
     private float $temperature;
     private string $prompt;
-    private string $query;
+    private array $query;
 
     /**
      * ChatGPTClient constructor.
@@ -49,7 +49,7 @@ class ChatGPTClient
      * @param string $query
      * @return \YouCast\ChatGPT\Api\ChatGPTClient
      */
-    public function setQuery(string $query): self
+    public function setQueries(string $query): self
     {
         $this->prompt = $query;
         return $this;
@@ -70,7 +70,7 @@ class ChatGPTClient
             ],
             [
                 "role" => "user",
-                "content" => $this->query
+                "content" => implode(' ', $this->query)
             ]
         ];
 
